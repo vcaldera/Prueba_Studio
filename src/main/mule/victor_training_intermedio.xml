@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="victor_training_intermedioFlow" doc:id="d456c3b5-6626-4ae1-87e4-13a3aa287f48" >
+		<http:listener doc:name="Listener" doc:id="27e0f16e-b3a1-40f5-8595-2771dd3d8b8f" config-ref="HTTP_Listener_config" path="/intermedio"/>
+		<flow-ref doc:name="Flow Reference" doc:id="73869ae5-8f6b-4483-9c49-18b1788f869d" name="estructuras_flowSub_Flow"/>
+	</flow>
+</mule>

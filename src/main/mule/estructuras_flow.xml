@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:vm="http://www.mulesoft.org/schema/mule/vm" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd">
+	
+	<flow name="Bienvenida_privateFlow" doc:id="17675f11-0453-434a-8ab8-80a71755acc2" >
+		<http:request method="GET" doc:name="Request" doc:id="f9019f11-fd8e-42a7-a7ec-9c8666f98a91" config-ref="HTTP_Request_configuration" path="/despedida"/>
+	</flow>
+	<flow name="bienvenida" doc:id="61ad2a1e-2d8b-45c1-996a-421fb633e63d" >
+		<http:listener doc:name="Listener" doc:id="f2f84b41-f09b-436a-851e-6f7c0a67d170" config-ref="HTTP_Listener_config" path="/bienvenida" allowedMethods="GET"/>
+		<flow-ref doc:name="Flow Reference" doc:id="14022ccf-764a-4e35-aabc-e46e71387653" name="estructuras_flowSub_Flow"/>
+		<vm:publish-consume queueName="Colas" doc:name="Publish consume" doc:id="ee3eeff4-9e8a-46c0-a432-80cbcf35c81d" config-ref="VM_Config" timeout="30000"/>
+		<logger level="INFO" doc:name="Logger" doc:id="3e3dea06-fe22-47ff-8452-e85b1581a544" />
+	</flow>
+	<sub-flow name="estructuras_flowSub_Flow" doc:id="0d581907-5f4c-4943-aa3c-8d0eec505660" >
+		<set-variable value='#["ingeniero binario"]' doc:name="Set Variable" doc:id="5b74b386-9ff4-4183-b95f-77ecd9d268c5" variableName="nombre"/>
+		<set-payload value='#["Bienvenido ingeniero binario subflow"]' doc:name="Set Payload" doc:id="2c09953c-551c-43e1-822e-fb5cd02c3e5a" />
+	</sub-flow>
+	<flow name="despedida" doc:id="1a2d6edd-ffdf-48ff-a9db-6ef1964015e6" >
+		<vm:listener doc:name="Listener" doc:id="9274ede3-0aa2-4bcd-863d-711b0108423d" config-ref="VM_Config" queueName="Colas"/>
+		<set-payload value='#["despedida ingeniero binario privado"]' doc:name="Set Payload" doc:id="8980bdd3-e994-4606-8053-f8f983111d14" />
+	</flow>
+</mule>
