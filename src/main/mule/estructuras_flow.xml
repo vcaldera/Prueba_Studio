@@ -22,6 +22,15 @@ output application/java
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
+		<ee:transform doc:name="Transform Message" doc:id="15b3f5f0-4e80-4c03-982f-27027ffa4ae3" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
 		<vm:publish-consume queueName="Colas" doc:name="Publish consume" doc:id="ee3eeff4-9e8a-46c0-a432-80cbcf35c81d" config-ref="VM_Config" timeout="30000"/>
 		<logger level="INFO" doc:name="Logger" doc:id="3e3dea06-fe22-47ff-8452-e85b1581a544" />
 	</flow>
