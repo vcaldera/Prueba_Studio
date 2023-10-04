@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:vm="http://www.mulesoft.org/schema/mule/vm" xmlns:http="http://www.mulesoft.org/schema/mule/http"
-	xmlns="http://www.mulesoft.org/schema/mule/core"
-	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:vm="http://www.mulesoft.org/schema/mule/vm"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
-http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd">
+http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
 	
 	<flow name="Bienvenida_privateFlow" doc:id="17675f11-0453-434a-8ab8-80a71755acc2" >
 		<http:request method="GET" doc:name="Request" doc:id="f9019f11-fd8e-42a7-a7ec-9c8666f98a91" config-ref="HTTP_Request_configuration" path="/despedida"/>
@@ -12,6 +13,15 @@ http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/cu
 	<flow name="bienvenida" doc:id="61ad2a1e-2d8b-45c1-996a-421fb633e63d" >
 		<http:listener doc:name="Listener" doc:id="f2f84b41-f09b-436a-851e-6f7c0a67d170" config-ref="HTTP_Listener_config" path="/bienvenida" allowedMethods="GET"/>
 		<flow-ref doc:name="Flow Reference" doc:id="14022ccf-764a-4e35-aabc-e46e71387653" name="estructuras_flowSub_Flow"/>
+		<ee:transform doc:name="Transform Message" doc:id="561d8f36-eb46-48cd-9bfd-b71eff55269e" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
 		<vm:publish-consume queueName="Colas" doc:name="Publish consume" doc:id="ee3eeff4-9e8a-46c0-a432-80cbcf35c81d" config-ref="VM_Config" timeout="30000"/>
 		<logger level="INFO" doc:name="Logger" doc:id="3e3dea06-fe22-47ff-8452-e85b1581a544" />
 	</flow>
